@@ -4,7 +4,7 @@ in vec3 vBary;
 
 out vec4 FragColor;
 
-// closer to the edge closer is to 0
+// closer to the edge, closer is to 0
 float edgeFactor()
 {
     // compute how close we are to an edge
