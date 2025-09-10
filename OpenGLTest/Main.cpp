@@ -20,19 +20,61 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-// cube vertex data: position (x,y,z) + color (r,g,b)
+// cube vertex data: position (x,y,z) + color (r,g,b) + barycentrix
 float cubeVertices[] = {
     // Front
-    -0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+     0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
 
     // Back
-    -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.5f,
+    -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+     0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+    // Left
+    -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+    -0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+    // Right
+     0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+     0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+     // Top
+     -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+      0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+      0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+      0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+     -0.5f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+     -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+     // Bottom
+     -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+      0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+      0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+
+      0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+     -0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+     -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
 };
 
 
@@ -44,60 +86,6 @@ unsigned int cubeIndices[] = {
     3, 2, 6, 6, 7, 3, // top
     0, 1, 5, 5, 4, 0  // bottom
 };
-
-// function that gives you the adjacent verices of given vertices
-
-std::vector<unsigned int> buildAdjacency(const std::vector<unsigned int>& indices)
-{
-    using Edge = std::pair<unsigned int, unsigned int>;
-    struct EdgeData { unsigned int triIndex, opp; };
-
-    auto make_edge = [](unsigned int a, unsigned int b) {
-        return (a < b) ? std::make_pair(a, b) : std::make_pair(b, a);
-        };
-
-    std::map<Edge, std::vector<EdgeData>> edgeMap;
-
-    for (size_t i = 0; i < indices.size(); i += 3) {
-        unsigned int a = indices[i];
-        unsigned int b = indices[i + 1];
-        unsigned int c = indices[i + 2];
-        edgeMap[make_edge(a, b)].push_back({ (unsigned int)i, c });
-        edgeMap[make_edge(b, c)].push_back({ (unsigned int)i, a });
-        edgeMap[make_edge(c, a)].push_back({ (unsigned int)i, b });
-    }
-
-    std::vector<unsigned int> adj;
-    adj.reserve(indices.size() * 2);
-
-    for (size_t i = 0; i < indices.size(); i += 3) {
-        unsigned int a = indices[i];
-        unsigned int b = indices[i + 1];
-        unsigned int c = indices[i + 2];
-
-        auto getOpp = [&](unsigned int v0, unsigned int v1, unsigned int oppDefault) {
-            auto key = make_edge(v0, v1);
-            auto& list = edgeMap[key];
-            for (auto& ed : list) {
-                if (ed.triIndex != i) return ed.opp;
-            }
-            return oppDefault; // no adjacent triangle found
-            };
-
-        unsigned int adj0 = getOpp(a, b, c);
-        unsigned int adj1 = getOpp(b, c, a); 
-        unsigned int adj2 = getOpp(c, a, b); 
-
-        adj.push_back(a);
-        adj.push_back(adj0);
-        adj.push_back(b);
-        adj.push_back(adj1);
-        adj.push_back(c);
-        adj.push_back(adj2);
-    }
-
-    return adj;
-}
 
 
 int main()
@@ -132,19 +120,17 @@ int main()
     glEnable(GL_DEPTH_TEST);
     
     // build and compile shaders
-    Shader ourShader("3.3.shader.vert", "3.3.shader.frag", "3.3.shader.geom"); // no more , 
+    Shader ourShader("3.3.shader.vert", "3.3.shader.frag"); // no more "3.3.shader.geom" , no real edge detection
 
     std::vector<unsigned int> indices(cubeIndices, cubeIndices + 36);
-    std::vector<unsigned int> adjIndices = buildAdjacency(indices); // adjacent indices
 
     // set up vertex data and buffers
     //VBO Vertex Buffer Objects
     //VAO Vertex Array Object
     //EBO Element Buffer Object
-    unsigned int VBO, VAO, EBO;
+    unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO); 
 
     glBindVertexArray(VAO);
     
@@ -152,17 +138,19 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
 
-    // buffer with adjacency info
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,adjIndices.size() * sizeof(unsigned int),adjIndices.data(),GL_STATIC_DRAW);
 
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+
+    // position attributes
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // color attribute
-    // TODO:everythng is black 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+
+    // color attributes
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+
+    // barycentric
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     // render loop
     while (!glfwWindowShouldClose(window))
@@ -176,8 +164,7 @@ int main()
         ourShader.use();
         
 
-        // i have no idea of how this work, something somthing transformation matrix for 3D
-        // ohh matrix rotation
+        // 
         glm::mat4 model = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(),glm::vec3(0.5f, 1.0f, 0.0f));
         glm::mat4 view = glm::translate(glm::mat4(1.0f),glm::vec3(0.0f, 0.0f, -3.0f));
         glm::mat4 projection = glm::perspective(glm::radians(45.0f),(float)SCR_WIDTH / (float)SCR_HEIGHT,0.1f, 100.0f);
@@ -190,10 +177,9 @@ int main()
         // send window scale for outline
         ourShader.setVec2("uWinScale", 1.0f / SCR_WIDTH, 1.0f / SCR_HEIGHT);
 
-        // draw cube but WHERE IS THE CUBE
         glBindVertexArray(VAO);
-        //glDrawArrays(GL_TRIANGLES, 0, 36); // with no adjacency
-        glDrawElements(GL_TRIANGLES_ADJACENCY, (GLsizei)adjIndices.size(), GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 36);; // with no adjacency
+        //glDrawElements(GL_TRIANGLES_ADJACENCY, (GLsizei)adjIndices.size(), GL_UNSIGNED_INT, 0);
 
 
         glfwSwapBuffers(window);
@@ -203,7 +189,7 @@ int main()
     // cleanup
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+  
 
     glfwTerminate();
     return 0;
