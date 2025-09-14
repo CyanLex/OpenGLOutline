@@ -27,18 +27,18 @@ void main()
     vec3 lightDir = normalize(lightPos - vFragPos);
 
     // ambient
-    float ambientStrength = 0.3;
+    float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * lightColor;
 
     // diffuse
-    float diff = max(dot(normals, lightDir), 0.0);
+    float diff = max(dot(normals, lightDir), 0.2);
     vec3 diffuse = diff * lightColor;
 
     // specular
     float specularStrength = 0.5f;
     vec3 viewDir = normalize(viewPos - vFragPos);
     vec3 reflectionDir = reflect(-lightDir, normals);
-    float spec = pow(max(dot(viewDir, reflectionDir), 0.0), 32);
+    float spec = pow(max(dot(viewDir, reflectionDir), 0.0), 64);
     vec3 specular = specularStrength * spec * lightColor;  
 
     vec3 phongResult = (ambient + diffuse + specular) * objectColor;
