@@ -16,7 +16,7 @@ float edgeFactor()
 {
     // compute how close we are to an edge
     vec3 balanceVec = fwidth(vBary);
-    vec3 pixelVec = smoothstep(vec3(0.0), balanceVec * 1.5, vBary);
+    vec3 pixelVec = smoothstep(vec3(0.0), balanceVec * 3, vBary);
     return min(min(pixelVec.x, pixelVec.y), pixelVec.z);
 }
 
@@ -27,7 +27,7 @@ void main()
     vec3 lightDir = normalize(lightPos - vFragPos);
 
     // ambient
-    float ambientStrength = 0.2;
+    float ambientStrength = 0.3;
     vec3 ambient = ambientStrength * lightColor;
 
     // diffuse
@@ -45,7 +45,7 @@ void main()
 
 
     float EF = edgeFactor();
-    vec3 edgeColor = vec3(0.0, 1.0, 1.0); // cyan
+    vec3 edgeColor = vec3(0.0, 1.0, 1.0); // 0,1,1 for cyan
     // chose color depending on EF
     // phongColor instead of vColor
     FragColor = vec4(mix(edgeColor, phongResult, EF), 1.0);

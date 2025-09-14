@@ -20,7 +20,7 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-// geometry shader not used anymore
+// geometry shader is not used anymore
 void main()
 {
    for (int i = 0; i < 3; i++) {
